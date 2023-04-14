@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-type repository struct {
+type MongoRepository struct {
 	// db *mongo.Database
 	Hello string
 }
@@ -17,11 +17,11 @@ type repository struct {
 // 	return &repository{db: db}
 // }
 
-func NewRepository(name string) Repository {
-	return &repository{Hello: name}
+func NewMongoRepository(name string) Repository {
+	return &MongoRepository{Hello: name}
 }
 
-func (r repository) GetSuperList(ctx context.Context, id string) (models.SuperList, error) {
+func (r MongoRepository) GetSuperList(ctx context.Context, id string) (models.SuperList, error) {
 	var list models.SuperList
 
 	list = models.SuperList{
@@ -33,4 +33,22 @@ func (r repository) GetSuperList(ctx context.Context, id string) (models.SuperLi
 	}
 
 	return list, nil
+}
+
+func (r MongoRepository) CreateSuperList(ctx context.Context, description string, sortOrder int, listItems []models.ListItem) (models.SuperList, error) {
+	superList := models.SuperList{
+		UUID:        uuid.NewString(),
+		DateCreated: time.Now(),
+		LastUpdated: time.Now(),
+		Description: description,
+		SortOrder:   sortOrder,
+		ListItems:   listItems,
+	}
+
+	return superList, nil
+}
+
+func (r MongoRepository) Lists(ctx context.Context) []models.SuperList {
+	var lists []models.SuperList
+	return lists
 }

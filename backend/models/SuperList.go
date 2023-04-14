@@ -10,4 +10,5 @@ type SuperList struct {
 	LastUpdated time.Time
 	Description string
 	SortOrder   int
+	ListItems   []ListItem
 }

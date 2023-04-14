@@ -8,3 +8,5 @@
 - https://lets-go.alexedwards.net/#packages
 - https://lets-go-further.alexedwards.net/
 - https://sweetcode.io/writing-restful-apis-in-go-without-dependencies/
+- https://groups.google.com/g/golang-nuts/c/M-_CyKCSGiA?pli=1
+- https://natedenlinger.com/dealing-with-trailing-slashes-on-requesturi-in-go-with-mux/

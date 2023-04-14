@@ -10,10 +10,11 @@ import (
 
 func Run() {
 
-	repository := repository.NewRepository("superlists")
-	server := NewServer(repository)
+	repo := repository.NewMemoryRepository()
+	server := NewServer(repo)
 
-	http.HandleFunc("/api/v1/superlist", server.GetSuperList)
+	http.HandleFunc("/api/v1/superlist/", server.SuperListHandler)
+	http.HandleFunc("/api/v1/check", server.Check)
 
 	port := ":8080"
 
