@@ -38,7 +38,7 @@ if (!initHelper.IsValidEnvironmentVariables())
 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
 {
     { "MongoDbSettings:ConnectionString", initHelper.ConnectionStringBuilder() },
-    { "MongoDbSettings:DatabaseName", "initHelper.DB_DATABASE_NAME" },
+    { "MongoDbSettings:DatabaseName", initHelper.DB_DATABASE_NAME },
     { "MongoDbSettings:CollectionName", initHelper.DB_COLLECTION_NAME }
 });
 
