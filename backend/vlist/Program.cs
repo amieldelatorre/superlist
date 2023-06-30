@@ -1,5 +1,7 @@
-using vlist.Models;
-using vlist.Services;
+using Amazon.Runtime.Internal.Transform;
+using Newtonsoft.Json;
+using vlist.Data;
+using vlist.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +14,39 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHealthChecks();
 
+IConfiguration config = new ConfigurationBuilder()
+    .AddEnvironmentVariables(prefix: "VLIST:")
+    .Build();
+
+
+var DB_HOST = config.GetValue<string?>("DB_HOST", null);
+var DB_USERNAME = config.GetValue<string?>("DB_USERNAME", null);
+var DB_PASSWORD = config.GetValue<string?>("DB_PASSWORD", null);
+var DB_DATABASE_NAME = config.GetValue<string?>("DB_DATABASE_NAME", null);
+var DB_COLLECTION_NAME = config.GetValue<string?>("DB_COLLECTION_NAME", null);
+
+var initHelper = new InitializationHelper(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_COLLECTION_NAME);
+
+if (!initHelper.IsValidEnvironmentVariables())
+{
+    foreach (string error in initHelper.Errors)
+        Console.WriteLine(error);
+
+    Environment.Exit(1);
+}
+
+builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+{
+    { "MongoDbSettings:ConnectionString", initHelper.ConnectionStringBuilder() },
+    { "MongoDbSettings:DatabaseName", "initHelper.DB_DATABASE_NAME" },
+    { "MongoDbSettings:CollectionName", initHelper.DB_COLLECTION_NAME }
+});
+
 builder.Services.Configure<MongoDbDatabaseSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
-builder.Services.AddSingleton<VListService>();
+
+builder.Services.AddSingleton<IRepo, MongoDbRepo>();
+
 
 var app = builder.Build();
 

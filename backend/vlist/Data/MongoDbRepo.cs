@@ -2,13 +2,13 @@
 using MongoDB.Driver;
 using vlist.Models;
 
-namespace vlist.Services
+namespace vlist.Data
 {
-    public class VListService
+    public class MongoDbRepo : IRepo
     {
         private readonly IMongoCollection<VList> _vlistCollection;
 
-        public VListService(IOptions<MongoDbDatabaseSettings> mongoDbDatabaseSettings)
+        public MongoDbRepo(IOptions<MongoDbDatabaseSettings> mongoDbDatabaseSettings)
         {
             var mongoClient = new MongoClient(
                 mongoDbDatabaseSettings.Value.ConnectionString);
@@ -23,10 +23,10 @@ namespace vlist.Services
 
         }
 
-        public async Task<VList> GetAsync(string id) => 
+        public async Task<VList> GetAsync(string id) =>
             await _vlistCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-        public async Task CreateAsync(VList vList) => 
+        public async Task CreateAsync(VList vList) =>
             await _vlistCollection.InsertOneAsync(vList);
 
         public async Task UpdateAsync(string id, VList updatedVlist) =>

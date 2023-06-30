@@ -1,4 +1,4 @@
-﻿namespace vlist.Models
+﻿namespace vlist.Data
 {
     public class MongoDbDatabaseSettings
     {
