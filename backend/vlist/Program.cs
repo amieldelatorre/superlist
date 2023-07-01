@@ -1,5 +1,5 @@
 using Amazon.Runtime.Internal.Transform;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 using vlist.Data;
 using vlist.Helpers;
 
@@ -7,7 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new ProducesAttribute("application/json"));
+    options.Filters.Add(new ConsumesAttribute("application/json"));
+})
+    .AddNewtonsoftJson();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,6 +32,7 @@ var DB_DATABASE_NAME = config.GetValue<string?>("DB_DATABASE_NAME", null);
 var DB_COLLECTION_NAME = config.GetValue<string?>("DB_COLLECTION_NAME", null);
 
 var initHelper = new InitializationHelper(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_COLLECTION_NAME);
+Console.WriteLine(initHelper.ConnectionStringBuilder(), initHelper.DB_DATABASE_NAME, initHelper.DB_COLLECTION_NAME);
 
 if (!initHelper.IsValidEnvironmentVariables())
 {

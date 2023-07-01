@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using vlist.Models;
+using vlist.Models.VList;
 
 namespace vlist.Data
 {

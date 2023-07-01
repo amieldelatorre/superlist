@@ -1,4 +1,4 @@
-﻿using vlist.Models;
+﻿using vlist.Models.VList;
 
 namespace vlist.Data
 {

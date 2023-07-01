@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using vlist.Data;
-using vlist.Models;
+using vlist.Models.VList;
 
 namespace vlist.Controllers
 {
@@ -18,10 +18,17 @@ namespace vlist.Controllers
             await _vListRepo.GetAsync(id);
 
         [HttpPost]
-        public async Task<IActionResult> Post(VList newVList)
-        {
-            newVList.Expiry = DateTime.Now.AddSeconds(30);
+        public async Task<IActionResult> Post(VListCreate vListCreate)
+        {  
+            VList newVList = new VList(
+                vListCreate.Title,
+                vListCreate.Description,
+                vListCreate.CreatedBy,
+                DateTime.ParseExact(vListCreate.Expiry, Validation.DateFormatAttribute.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None).ToUniversalTime()
+                );
+
             await _vListRepo.CreateAsync(newVList);
+            
             return CreatedAtAction(nameof(Get), new { id = newVList.Id }, newVList);
         }
 
