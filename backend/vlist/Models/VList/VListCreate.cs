@@ -4,9 +4,9 @@ using vlist.Validation;
 namespace vlist.Models.VList
 {
     public class VListCreate
-    {
+    {   
+        [ExpiryDateValidation]
         [Required]
-        [DateFormatAttribute(ErrorMessage = $"Accepted format is {Validation.DateFormatAttribute.DateFormat} -> 2023-07-27T00:00:00+02")]
         public required string Expiry { get; set; }
         [Required]
         public required string CreatedBy { get; set; }

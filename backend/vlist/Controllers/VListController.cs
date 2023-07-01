@@ -2,6 +2,7 @@
 using System.Globalization;
 using vlist.Data;
 using vlist.Models.VList;
+using vlist.Validation;
 
 namespace vlist.Controllers
 {
@@ -24,7 +25,7 @@ namespace vlist.Controllers
                 vListCreate.Title,
                 vListCreate.Description,
                 vListCreate.CreatedBy,
-                DateTime.ParseExact(vListCreate.Expiry, Validation.DateFormatAttribute.DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None).ToUniversalTime()
+                DateValidation.ParseDate(vListCreate.Expiry).ToUniversalTime()
                 );
 
             await _vListRepo.CreateAsync(newVList);

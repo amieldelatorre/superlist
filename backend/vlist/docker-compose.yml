@@ -30,15 +30,15 @@ services:
             - ME_CONFIG_BASICAUTH_USERNAME=mexpress
             - ME_CONFIG_BASICAUTH_PASSWORD=mexpress
     
-    vlist:
-        image: vlist
-        container_name: vlist
-        restart: unless-stopped
-        ports:
-            - 8080:80
-        environment:
-            - VLIST__DB_HOST=mongodb:27017
-            - VLIST__DB_USERNAME=root
-            - VLIST__DB_PASSWORD=password
-            - VLIST__DB_DATABASE_NAME=dev
-            - VLIST__DB_COLLECTION_NAME=vlist
+    #vlist:
+    #    image: vlist
+    #    container_name: vlist
+    #    restart: unless-stopped
+    #    ports:
+    #        - 8080:80
+    #    environment:
+    #        - VLIST__DB_HOST=mongodb:27017
+    #        - VLIST__DB_USERNAME=root
+    #        - VLIST__DB_PASSWORD=password
+    #        - VLIST__DB_DATABASE_NAME=dev
+    #        - VLIST__DB_COLLECTION_NAME=vlist
