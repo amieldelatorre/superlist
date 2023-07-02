@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
 
 IConfiguration config = new ConfigurationBuilder()
-    .AddEnvironmentVariables(prefix: "VLIST:")
+    .AddEnvironmentVariables(prefix: InitializationHelper.ENV_PREFIX_FULL)
     .Build();
 
 
@@ -30,9 +30,9 @@ var DB_USERNAME = config.GetValue<string?>("DB_USERNAME", null);
 var DB_PASSWORD = config.GetValue<string?>("DB_PASSWORD", null);
 var DB_DATABASE_NAME = config.GetValue<string?>("DB_DATABASE_NAME", null);
 var DB_COLLECTION_NAME = config.GetValue<string?>("DB_COLLECTION_NAME", null);
+var FRONTEND_URL = config.GetValue<string?>("FRONTEND_URL");
 
-var initHelper = new InitializationHelper(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_COLLECTION_NAME);
-Console.WriteLine(initHelper.ConnectionStringBuilder(), initHelper.DB_DATABASE_NAME, initHelper.DB_COLLECTION_NAME);
+var initHelper = new InitializationHelper(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME, DB_COLLECTION_NAME, FRONTEND_URL);
 
 if (!initHelper.IsValidEnvironmentVariables())
 {
@@ -54,6 +54,15 @@ builder.Services.Configure<MongoDbDatabaseSettings>(
 
 builder.Services.AddSingleton<IRepo, MongoDbRepo>();
 
+var AllowSpecificOrigins = "AllowedSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowSpecificOrigins, builder =>
+    {
+        builder.WithOrigins(initHelper.FRONTEND_URL);
+    });
+});
+
 
 var app = builder.Build();
 
@@ -65,6 +74,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(AllowSpecificOrigins);
 
 app.UseAuthorization();
 

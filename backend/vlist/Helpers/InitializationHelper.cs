@@ -6,11 +6,13 @@ namespace vlist.Helpers
 {
     public class InitializationHelper
     {
+        public const string ENV_PREFIX_FULL = "VLIST__";
         public string? DB_HOST { get; set; }
         public string? DB_USERNAME { get; set; }
         public string? DB_PASSWORD { get; set; }
         public string? DB_DATABASE_NAME { get; set; }
         public string? DB_COLLECTION_NAME { get; set; }
+        public string? FRONTEND_URL { get; set; }
         public List<string> Errors { get; set; }
 
         public InitializationHelper(
@@ -18,7 +20,8 @@ namespace vlist.Helpers
             string? _DB_USERNAME,
             string? _DB_PASSWORD,
             string? _DB_DATABASE_NAME,
-            string? _DB_COLLECTION_NAME
+            string? _DB_COLLECTION_NAME,
+            string? _FRONTEND_URL
             ) 
         {
             DB_HOST = _DB_HOST;
@@ -26,21 +29,24 @@ namespace vlist.Helpers
             DB_PASSWORD = _DB_PASSWORD;
             DB_DATABASE_NAME = _DB_DATABASE_NAME;
             DB_COLLECTION_NAME = _DB_COLLECTION_NAME;
+            FRONTEND_URL = _FRONTEND_URL;
             Errors = new List<string>();
         }
 
         public bool IsValidEnvironmentVariables()
         {
             if (String.IsNullOrWhiteSpace(DB_HOST))
-                Errors.Add($"VLIST_{nameof(DB_HOST)} cannot be null");
+                Errors.Add($"{ENV_PREFIX_FULL}{nameof(DB_HOST)} cannot be null");
             if (String.IsNullOrWhiteSpace(DB_USERNAME))
-                Errors.Add($"VLIST_{nameof(DB_USERNAME)} cannot be null");
+                Errors.Add($"{ENV_PREFIX_FULL}{nameof(DB_USERNAME)} cannot be null");
             if (String.IsNullOrWhiteSpace(DB_PASSWORD))
-                Errors.Add($"VLIST_{nameof(DB_PASSWORD)} cannot be null");
+                Errors.Add($"{ENV_PREFIX_FULL}{nameof(DB_PASSWORD)} cannot be null");
             if (String.IsNullOrWhiteSpace(DB_DATABASE_NAME))
-                Errors.Add($"VLIST_{nameof(DB_DATABASE_NAME)} cannot be null");
+                Errors.Add($"{ENV_PREFIX_FULL}{nameof(DB_DATABASE_NAME)} cannot be null");
             if (String.IsNullOrWhiteSpace(DB_COLLECTION_NAME))
-                Errors.Add($"VLIST_{nameof(DB_COLLECTION_NAME)} cannot be null");
+                Errors.Add($"{ENV_PREFIX_FULL}{nameof(DB_COLLECTION_NAME)} cannot be null");
+            if (String.IsNullOrWhiteSpace(FRONTEND_URL))
+                Errors.Add($"{ENV_PREFIX_FULL}{nameof(FRONTEND_URL)} cannot be null");
 
             string connectionString = ConnectionStringBuilder();
             CheckMongoDBConnection(connectionString);
