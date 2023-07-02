@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace vlist.Models.VList
 {
-    public class VList
+    public class VListPresent
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -12,7 +12,6 @@ namespace vlist.Models.VList
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         [Required]
-
         public DateTime Created { get; set; }
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
@@ -27,30 +26,23 @@ namespace vlist.Models.VList
         [Required]
         public string UpdatedBy { get; set; }
 
-        [Required]
-        [StringLength(int.MaxValue, MinimumLength = 8)]
-        public string PassPhrase { get; set; }
-
-        [Required]
         public List<VListItem> ListItems { get; set; }
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         [Required]
         public DateTime Expiry { get; set; }
 
-        public VList(string title, string description, string createdBy, DateTime expiry, string passPhrase) 
-        {
-            Title = title;
-            Description = description;
-            CreatedBy = createdBy;
-            Expiry = expiry;
-            PassPhrase = BCrypt.Net.BCrypt.EnhancedHashPassword(passPhrase);
-            
-            ListItems = new List<VListItem>();
-
-            Created = DateTime.UtcNow;
-            Updated = Created;
-            UpdatedBy = CreatedBy;
+        public VListPresent(VList vList) 
+        { 
+            Id = vList.Id;
+            Created = vList.Created;
+            Updated = vList.Updated;
+            Title = vList.Title;
+            Description = vList.Description;
+            CreatedBy = vList.CreatedBy;
+            UpdatedBy = vList.UpdatedBy;
+            ListItems = vList.ListItems;
+            Expiry = vList.Expiry;
         }
     }
 }

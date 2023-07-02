@@ -126,3 +126,4 @@ E:\projects\personal\vlist\backend\vList.Tests\obj\Debug\net7.0\refint\vList.Tes
 E:\projects\personal\vlist\backend\vList.Tests\obj\Debug\net7.0\vList.Tests.pdb
 E:\projects\personal\vlist\backend\vList.Tests\obj\Debug\net7.0\vList.Tests.genruntimeconfig.cache
 E:\projects\personal\vlist\backend\vList.Tests\obj\Debug\net7.0\ref\vList.Tests.dll
+E:\projects\personal\vlist\backend\vList.Tests\bin\Debug\net7.0\BCrypt.Net-Next.dll

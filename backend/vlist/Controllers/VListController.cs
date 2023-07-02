@@ -21,7 +21,7 @@ namespace vlist.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(VListCreate vListCreate)
         {  
-            VList newVList = new VList(
+            VList newVList = new(
                 vListCreate.Title.Trim(),
                 vListCreate.Description.Trim(),
                 vListCreate.CreatedBy.Trim(),
@@ -30,8 +30,10 @@ namespace vlist.Controllers
                 );
 
             await _vListRepo.CreateAsync(newVList);
+
+            VListPresent vListPresent = new(newVList);
             
-            return CreatedAtAction(nameof(Get), new { id = newVList.Id }, newVList);
+            return CreatedAtAction(nameof(Get), new { id = vListPresent.Id }, vListPresent);
         }
 
         [HttpPut("{id:length(24)}")]
