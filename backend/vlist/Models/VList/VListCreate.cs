@@ -13,6 +13,8 @@ namespace vlist.Models.VList
         [Required]
         public required string Title { get; set; }
         [Required]
-        public required string Description { get; set; }
+        [StringLength(int.MaxValue, MinimumLength = 8, ErrorMessage = "The field PassPhrase must be a string with a minimum length of 8")]
+        public required string PassPhrase { get; set; }
+        public string Description { get; set; } = string.Empty;
     }
 }

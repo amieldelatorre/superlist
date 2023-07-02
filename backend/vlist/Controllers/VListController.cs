@@ -22,10 +22,11 @@ namespace vlist.Controllers
         public async Task<IActionResult> Post(VListCreate vListCreate)
         {  
             VList newVList = new VList(
-                vListCreate.Title,
-                vListCreate.Description,
-                vListCreate.CreatedBy,
-                DateValidation.ParseDate(vListCreate.Expiry).ToUniversalTime()
+                vListCreate.Title.Trim(),
+                vListCreate.Description.Trim(),
+                vListCreate.CreatedBy.Trim(),
+                DateValidation.ParseDate(vListCreate.Expiry).ToUniversalTime(),
+                vListCreate.PassPhrase
                 );
 
             await _vListRepo.CreateAsync(newVList);

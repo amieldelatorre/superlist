@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "3q0sO+Wu2Du0ISRq6fnedvJcP30016oJgQvo14IUeqWrONv6mBSRBs/XuhhrB558CW9JCiNhyEpmsM2GVq0bsQ==",
+  "dgSpecHash": "0pSdzHvGdZRuf8F97IeYly2VUeFnAtkMkpqkIOrxZTMOpZ3pxb/HQhilGghQDQeZiPd05hNuNVx+JCC5SeV9zQ==",
   "success": true,
   "projectFilePath": "E:\\projects\\personal\\vlist\\backend\\vList.Tests\\vList.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Amiel\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\Amiel\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",
+    "C:\\Users\\Amiel\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Amiel\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
     "C:\\Users\\Amiel\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\Amiel\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\7.0.8\\microsoft.aspnetcore.jsonpatch.7.0.8.nupkg.sha512",

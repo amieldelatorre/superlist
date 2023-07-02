@@ -7,7 +7,7 @@ namespace vlist.Validation
         public const string DateFormat = "yyyy-MM-ddTHH:mm:sszz";
         public static bool IsValidDate(string date)
         {
-            bool result = DateTime.TryParseExact((string?)date, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+            bool result = DateTime.TryParseExact(date.Trim(), DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
 
             return result;
         }
@@ -19,7 +19,7 @@ namespace vlist.Validation
 
         public static DateTime ParseDate(string date)
         {
-            return DateTime.ParseExact(date, DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None);
+            return DateTime.ParseExact(date.Trim(), DateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None);
         }
 
     }
