@@ -3,16 +3,36 @@ import { CreateListModal } from "../components/CreateListModal";
 
 export const Home: FC = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showCreateListButton, setShowCreateListButton] = useState(true);
 
-  const toggleModal = () => {
+  const createListButtonModalToggle = () => {
     setShowModal(showModal => !showModal);
+    setShowCreateListButton(showCreateListButton => !showCreateListButton);
   };
 
-
   return (
-    <div> 
-      <button onClick={toggleModal} >Create list</button>
-      <CreateListModal showModal={showModal} toggleModal={toggleModal}/>
-    </div>
+    <>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      <h1>Title</h1>
+      { showCreateListButton && <button className="create-list-button" onClick={createListButtonModalToggle}>Create list</button> }
+      <CreateListModal showModal={showModal} toggleShowModal={createListButtonModalToggle}/>
+    </>
   )
 }

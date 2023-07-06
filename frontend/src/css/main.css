@@ -1,9 +1,116 @@
-.base-modal {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.create-list-button {
+  background-color: #f3c588;
+  width: 150px;
+  height: 50px;
+  font-size: medium;
+  font-weight: 800;
 }
+
+/* .main-wrapper {
+  height: 1000px;
+  text-align: center;
+} */
+
+.create-list-modal-content {
+  width: 80%;
+  margin: 30px auto 30px auto;
+  padding: 10px;
+  overflow: hidden;
+  text-align: initial;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  margin: auto;
+  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, .4);
+}
+
+.close-button {
+  color: #aaaaaa;
+  text-align: end;
+  font-size: 40px;
+  font-weight: bold;
+  width: fit-content;
+  float: right;
+  cursor: pointer;
+  padding-right: 1%;
+}
+
+.form-field {
+  margin: 2px;
+}
+
+input:hover, textarea:hover, label:hover {
+  cursor: text;
+}
+
+form label {
+  height: 0px;
+}
+
+form input, form textarea {
+  width: 95%;
+}
+
+form input, form textarea, label {
+  transition: all 500ms cubic-bezier(1, -0.75, 1, 1);
+  touch-action: manipulation;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+
+form .text-field-wrap label {
+  display: block;
+  transform-origin: left bottom;
+  transform: translate(0.2em, -2.1em);
+}
+
+form .textarea-field-wrap label {
+  display: block;
+  transform-origin: left bottom;
+  transform: translate(0.2em, -7em);
+}
+
+form .text-field-wrap input:focus {
+  border-color: #f3c588;
+  outline-width: 0;
+}
+
+form .text-field-wrap input:focus + label {
+  transform: translate(0.2em, -4em);
+}
+
+form .text-field-wrap input:valid + label {
+  transform: translate(0.2em, -4em);
+}
+
+form .textarea-field-wrap textarea:focus {
+  border-color: #f3c588;
+  outline-width: 0;
+}
+
+form .textarea-field-wrap textarea:focus + label {
+  transform: translate(0.2em, -8.5em);
+}
+
+form .textarea-field-wrap textarea:valid + label {
+  transform: translate(0.2em, -8.5em);
+}
+
+.create-list-form-submit-button {
+  background-color: #f3c588;
+  width: 120px;
+  height: 30px;
+  font-size: medium;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.create-list-form-submit-button-wrapper {
+  display: flex;
+  justify-content: end;
+}
+
