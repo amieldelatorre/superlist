@@ -29,6 +29,9 @@
   float: right;
   cursor: pointer;
   padding-right: 1%;
+  background: white;
+  border: none;
+  box-shadow: none;
 }
 
 .create-list-modal-content .form-header {
@@ -47,9 +50,16 @@
      1px 1px 0 #000;
 }
 
-
 form.create-list-form {
   margin-top: 10px;
+}
+
+form.create-list-form .form-errors {
+  margin-bottom: 20px;
+}
+
+form.create-list-form .form-errors-text {
+  list-style-type: none;
 }
 
 form.create-list-form .form-field {
@@ -70,7 +80,7 @@ form.create-list-form input, form textarea {
 }
 
 form.create-list-form input[type=datetime-local] {
-  width: 150px
+  width: 250px
 }
 
 form.create-list-form input, form textarea, label {

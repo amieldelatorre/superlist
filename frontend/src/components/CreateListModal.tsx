@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState, useEffect, useCallback } from "react";
+import { FC, ChangeEvent, useState, useEffect, useCallback, ReactElement } from "react";
 
 interface CreateListModalProps {
   showModal: boolean;
@@ -11,10 +11,12 @@ type FormData = {
   description: string;
   passphrase: string;
   expiry: Date;
+  errors: { [key: string]: string };
 };
 
+
 export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShowModal}: CreateListModalProps) => {
-  const [formData, setFormData] = useState<FormData>({createdBy: "", title: "", description: "", passphrase: "", expiry: new Date(Date.now() + (3600 * 1000 * 24))});
+  const [formData, setFormData] = useState<FormData>({createdBy: "", title: "", description: "", passphrase: "", expiry: new Date(Date.now() + (3600 * 1000 * 24)), errors: {}});
   
   const handleEscKey = useCallback((e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -27,10 +29,43 @@ export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShow
   });
 
   const createListFormSubmit = (e: React.FormEvent) => {
-    console.log(formData);
     e.preventDefault()
-    toggleShowModal();
+    formData.errors = {}; // Reset errors
+
+    validateCreateForm();
+    let numErrors = Object.keys(formData.errors).length;
+    console.log(numErrors)
+
+    if (numErrors == 0) {
+      fetch("http://localhost:8080/health")
+      .then(res => res.text())
+      .then(console.log)
+      
+      // toggleShowModal();
+    }
+    // console.log(validatedFormData);
   };
+
+  const validateCreateForm = () => {
+    let curDate = new Date();
+    let minDate = new Date(curDate.getTime() + 30 * 60000); // Minimum 30 minutes
+    let maxDate = new Date(curDate.getTime() + 30 * 86400000); // Maximum 30 days
+    let errors: { [key: string]: string } = {};
+
+    if (formData.passphrase.length < 8) errors["Passphrase"] = "must be at least 8 characters long";
+    if (formData.title.length < 1) errors["Title"] = "cannot be empty";
+    if (formData.createdBy.length < 1) errors["Nickname"] = "cannot be empty";
+    if (formData.expiry < minDate || formData.expiry > maxDate) errors["Expiry"] = "must be greater than 30 minutes and less than 30 days";
+
+    setFormData({
+      errors: errors,
+      passphrase: formData.passphrase,
+      createdBy: formData.createdBy,
+      description: formData.description,
+      title: formData.title,
+      expiry: formData.expiry
+    })
+  }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleFormChange(e.currentTarget.id, e.currentTarget.value);
@@ -52,12 +87,25 @@ export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShow
 
   const dateToDateTimeLocalString = (date: Date): string => {
     const year = date.getFullYear().toString();
-    const month = date.getMonth() < 10 ? `0${date.getMonth()}`: date.getMonth();
+    const month = date.getMonth() < 10 ? `0${date.getMonth() + 1}`: date.getMonth() + 1;
     const day = date.getDate() < 10 ? `0${date.getDate()}`: date.getDate();
 
 
     return [year, month, day].join('-') + "T" + date.toTimeString().slice(0, 5);
   } 
+
+  const getErrors = (): ReactElement => {
+    return (
+      <div className="form-errors">
+        {
+          Object.entries(formData.errors)
+            .map( ([key, value]) => 
+              <li className="red-text form-errors-text" key={key}><em>{key}: {value}</em></li>
+            )
+        }
+      </div>
+    )
+  }
 
   return (
     <> 
@@ -67,9 +115,12 @@ export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShow
             <div className="create-list-modal-content" onClick={e => {e.stopPropagation();}}> 
               <div className="form-header">
                 <h1 className="form-title">Create a List</h1>
-                <span className="close-button" onClick={toggleShowModal}>&times;</span>
+                <button className="close-button" onClick={toggleShowModal}>&times;</button>
               </div>
+              
               <form className="create-list-form" onSubmit={createListFormSubmit}>
+                {getErrors()}
+
                 <div className="form-field text-field-wrap">
                   <input type="text" id="title" value={formData.title} onChange={handleInputChange} required/>
                   <label htmlFor="title">
