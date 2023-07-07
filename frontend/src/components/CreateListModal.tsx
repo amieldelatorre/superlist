@@ -1,5 +1,4 @@
 import { FC, ChangeEvent, useState, useEffect, useCallback } from "react";
-import '../css/main.css';
 
 interface CreateListModalProps {
   showModal: boolean;

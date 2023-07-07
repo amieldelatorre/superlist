@@ -1,4 +1,41 @@
-form.create-list-form .form-title {
+.create-list-button {
+  background-color: #f3c588;
+  width: 150px;
+  height: 50px;
+  font-size: medium;
+  font-weight: 800;
+}
+
+.create-list-modal-content {
+  width: 80%;
+  margin: 30px auto 30px auto;
+  padding: 10px;
+  overflow: hidden;
+  text-align: initial;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  margin: auto;
+  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, .4);
+}
+
+.close-button {
+  color: #aaaaaa;
+  text-align: end;
+  font-size: 40px;
+  font-weight: bold;
+  width: fit-content;
+  float: right;
+  cursor: pointer;
+  padding-right: 1%;
+}
+
+.create-list-modal-content .form-header {
+  text-align: center;
+}
+
+.create-list-modal-content .form-header .form-title {
   width: fit-content;
   display: inline-block;
   margin-top: 5px;
@@ -9,6 +46,7 @@ form.create-list-form .form-title {
     -1px 1px 0 #000,
      1px 1px 0 #000;
 }
+
 
 form.create-list-form {
   margin-top: 10px;
