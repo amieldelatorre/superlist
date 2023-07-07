@@ -1,11 +1,13 @@
 import { FC, ChangeEvent, useState, useEffect, useCallback, ReactElement } from "react";
+import { BACKEND_HEALTH_URL } from '../../api/config';
+import { AcceptedCreateListFormData, sendApiRequest } from '../../api/api';
 
 interface CreateListModalProps {
   showModal: boolean;
   toggleShowModal(): void;
 }
 
-type FormData = {
+export type CreateListFormData = {
   createdBy: string;
   title: string;
   description: string;
@@ -14,9 +16,8 @@ type FormData = {
   errors: { [key: string]: string };
 };
 
-
 export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShowModal}: CreateListModalProps) => {
-  const [formData, setFormData] = useState<FormData>({createdBy: "", title: "", description: "", passphrase: "", expiry: new Date(Date.now() + (3600 * 1000 * 24)), errors: {}});
+  const [formData, setFormData] = useState<CreateListFormData>({createdBy: "", title: "", description: "", passphrase: "", expiry: new Date(Date.now() + (3600 * 1000 * 24)), errors: {}});
   
   const handleEscKey = useCallback((e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -28,25 +29,10 @@ export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShow
     document.addEventListener('keyup', handleEscKey, false);
   });
 
-  const createListFormSubmit = (e: React.FormEvent) => {
+  const createListFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    formData.errors = {}; // Reset errors
 
-    validateCreateForm();
-    let numErrors = Object.keys(formData.errors).length;
-    console.log(numErrors)
-
-    if (numErrors == 0) {
-      fetch("http://localhost:8080/health")
-      .then(res => res.text())
-      .then(console.log)
-      
-      // toggleShowModal();
-    }
-    // console.log(validatedFormData);
-  };
-
-  const validateCreateForm = () => {
+    // validateCreateForm();
     let curDate = new Date();
     let minDate = new Date(curDate.getTime() + 30 * 60000); // Minimum 30 minutes
     let maxDate = new Date(curDate.getTime() + 30 * 86400000); // Maximum 30 days
@@ -57,11 +43,28 @@ export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShow
     if (formData.createdBy.length < 1) errors["Nickname"] = "cannot be empty";
     if (formData.expiry < minDate || formData.expiry > maxDate) errors["Expiry"] = "must be greater than 30 minutes and less than 30 days";
 
+
     setFormData(prevState => ({
       ...prevState,
       errors: errors
     }))
-  }
+
+    let numErrors = Object.keys(errors).length;
+
+    if (numErrors === 0) {
+      let data: AcceptedCreateListFormData = {
+        createdBy: formData.createdBy,
+        title: formData.title,
+        description: formData.description,
+        passphrase: formData.passphrase,
+        expiry: formData.expiry.toISOString().slice(0, 19) + "Z",
+      };
+      await sendApiRequest("POST", data)
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.log(err));      
+    }
+  };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleFormChange(e.currentTarget.id, e.currentTarget.value);

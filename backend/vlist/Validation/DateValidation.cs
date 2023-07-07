@@ -11,7 +11,7 @@ namespace vlist.Validation
         };
         public static bool IsValidDate(string date)
         {
-            bool result = DateTime.TryParseExact(date.Trim(), "fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+            bool result = DateTime.TryParseExact(date.Trim(), DateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
 
             return result;
         }
