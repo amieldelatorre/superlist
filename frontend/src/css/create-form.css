@@ -56,10 +56,7 @@ form.create-list-form {
 
 form.create-list-form .form-errors {
   margin-bottom: 20px;
-}
-
-form.create-list-form .form-errors-text {
-  list-style-type: none;
+  text-align: center;
 }
 
 form.create-list-form .form-field {

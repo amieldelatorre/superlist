@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { CreateListModal } from "../components/CreateListModal";
+import { CreateListModal } from "../features/createList/CreateList";
 import '../css/create-form.css'
 
 export const Home: FC = () => {
