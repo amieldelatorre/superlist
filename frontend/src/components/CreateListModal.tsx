@@ -57,14 +57,10 @@ export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShow
     if (formData.createdBy.length < 1) errors["Nickname"] = "cannot be empty";
     if (formData.expiry < minDate || formData.expiry > maxDate) errors["Expiry"] = "must be greater than 30 minutes and less than 30 days";
 
-    setFormData({
-      errors: errors,
-      passphrase: formData.passphrase,
-      createdBy: formData.createdBy,
-      description: formData.description,
-      title: formData.title,
-      expiry: formData.expiry
-    })
+    setFormData(prevState => ({
+      ...prevState,
+      errors: errors
+    }))
   }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
