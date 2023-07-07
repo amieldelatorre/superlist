@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { CreateListModal } from "../components/CreateListModal";
+import '../css/create-form.css'
 
 export const Home: FC = () => {
   const [showModal, setShowModal] = useState(false);

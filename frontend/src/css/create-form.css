@@ -1,0 +1,145 @@
+form.create-list-form .form-title {
+  width: fit-content;
+  display: inline-block;
+  margin-top: 5px;
+  color: #f3c588;
+  text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
+form.create-list-form {
+  margin-top: 10px;
+}
+
+form.create-list-form .form-field {
+  margin: 2px;
+}
+
+form.create-list-form input:hover, textarea:hover, label:hover {
+  cursor: text;
+}
+
+
+form.create-list-form label {
+  height: 0px;
+}
+
+form.create-list-form input, form textarea {
+  width: 95%;
+}
+
+form.create-list-form input[type=datetime-local] {
+  width: 150px
+}
+
+form.create-list-form input, form textarea, label {
+  transition: all 250ms cubic-bezier(1, -0.75, 1, 1);
+  touch-action: manipulation;
+}
+
+form.create-list-form .form-field {
+  margin-bottom: 20px;
+}
+
+
+form.create-list-form .text-field-wrap label {
+  display: block;
+  transform-origin: left bottom;
+  transform: translate(0.2em, -2.1em);
+}
+
+form.create-list-form .textarea-field-wrap label {
+  display: block;
+  transform-origin: left bottom;
+  transform: translate(0.2em, -7em);
+}
+
+form.create-list-form .text-field-wrap input:focus {
+  border-color: #f3c588;
+  outline-width: 0;
+}
+
+form.create-list-form .text-field-wrap input:focus + label {
+  transform: translate(0.2em, -4em);
+}
+
+form.create-list-form .text-field-wrap input:valid + label {
+  transform: translate(0.2em, -4em);
+}
+
+form.create-list-form .textarea-field-wrap textarea:focus {
+  border-color: #f3c588;
+  outline-width: 0;
+}
+
+form.create-list-form .textarea-field-wrap textarea:focus + label {
+  transform: translate(0.2em, -8.5em);
+}
+
+form.create-list-form .textarea-field-wrap textarea:valid + label {
+  transform: translate(0.2em, -8.5em);
+}
+
+form.create-list-form .datetime-local-field-wrap label {
+  display: block;
+  width: 95%;
+  height: 100%;
+  margin-left: 3px;
+}
+
+form.create-list-form .create-list-form-submit-button {
+  background-color: #f3c588;
+  width: 120px;
+  height: 30px;
+  font-size: medium;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+form.create-list-form .create-list-form-submit-button-wrapper {
+  display: flex;
+  justify-content: end;
+}
+
+
+form.create-list-form .tooltip {
+  margin-left: 3px;
+  position: relative;
+  cursor: help;
+}
+
+form.create-list-form .tooltip .tooltip-text {
+  visibility: hidden;
+  width: 150px;
+  background-color: rgba(85, 85, 85, 0);
+  color: #fff;
+  padding: 5px;
+  position: absolute;
+  z-index: 5;
+  bottom: -17px;
+  left: 80px;
+  margin-left: -60px;
+  transition: background 0.3s;
+  border-radius: 6px;
+  text-align: center;
+}
+
+form.create-list-form .tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: 5px;
+  border-width: 5px;
+  border-style: solid;
+}
+
+form.create-list-form .tooltip:hover .tooltip-text {
+  visibility: visible;
+  background-color: rgba(85, 85, 85, .8);
+  transition: background 0.3s;
+}
+

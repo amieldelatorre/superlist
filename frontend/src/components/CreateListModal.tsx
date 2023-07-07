@@ -66,32 +66,58 @@ export const CreateListModal: FC<CreateListModalProps> = ({showModal, toggleShow
         showModal ? (
           <div id="create-list-base-modal" className="base-modal" onClick={toggleShowModal}> 
             <div className="create-list-modal-content" onClick={e => {e.stopPropagation();}}> 
-              <div>
+              <div className="form-header">
+                <h1 className="form-title">Create a List</h1>
                 <span className="close-button" onClick={toggleShowModal}>&times;</span>
               </div>
-              <form onSubmit={createListFormSubmit}>
+              <form className="create-list-form" onSubmit={createListFormSubmit}>
                 <div className="form-field text-field-wrap">
                   <input type="text" id="title" value={formData.title} onChange={handleInputChange} required/>
-                  <label htmlFor="title">Title:</label>
+                  <label htmlFor="title">
+                    Title
+                    <i className="custom-fa tooltip fa">&#xf059;
+                      <span className="tooltip-text">Give this list a name</span>
+                    </i>
+                  </label>
                 </div>
 
                 <div className="form-field text-field-wrap">
                   <input type="text" id="createdBy" value={formData.createdBy} onChange={handleInputChange} required/>
-                  <label htmlFor="createdBy">Nickname:</label>
+                  <label htmlFor="createdBy">
+                    Nickname
+                    <i className="custom-fa tooltip fa">&#xf059;
+                      <span className="tooltip-text">Nickname to show who created this list. Whatever you want to be called by!</span>
+                    </i>
+                  </label>
                 </div>
 
                 <div className="form-field textarea-field-wrap">
                   <textarea id="description"value={formData.description} onChange={handleTextareaChange} required/>
-                  <label htmlFor="description">Description:</label>
+                  <label htmlFor="description">
+                    Description
+                    <i className="custom-fa tooltip fa">&#xf059;
+                      <span className="tooltip-text">Describe what this list is about</span>
+                    </i>
+                  </label>
                 </div>
 
                 <div className="form-field text-field-wrap">
                   <input type="password" id="passphrase" value={formData.passphrase} onChange={handleInputChange} required/>
-                  <label htmlFor="passphrase">Passphrase:</label>
+                  <label htmlFor="passphrase">
+                    Passphrase
+                    <i className="custom-fa tooltip fa">&#xf059;
+                      <span className="tooltip-text">Shared secret to be given to others who will view this list. This is <strong className="red-text">NOT</strong> a secure password that only you will know!</span>
+                    </i>
+                  </label>
                 </div>
 
                 <div className="form-field datetime-local-field-wrap">
-                  <label htmlFor="expiry">Expiry:</label>
+                  <label htmlFor="expiry">
+                    Expiry
+                    <i className="custom-fa tooltip fa">&#xf059;
+                      <span className="tooltip-text">When the the list will be deleted</span>
+                    </i>
+                  </label>
                   <input type="datetime-local" id="expiry" value={dateToDateTimeLocalString(formData.expiry)} onChange={handleInputChange} required/>
                 </div>
                 
