@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using System.Net;
 using vlist.Data;
 using vlist.Models.VList;
 using vlist.Validation;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace vlist.Controllers
 {
@@ -20,7 +22,16 @@ namespace vlist.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Post(VListCreate vListCreate)
-        {  
+        {
+            Dictionary<string, List<string>> validationErrors = vListCreate.ValidateListCreate();
+            if (validationErrors.Count != 0)
+                return BadRequest(new {
+                    errors = validationErrors,
+                    staus = HttpStatusCode.BadRequest,
+                    title = "One or more validation errors occured."
+                });
+
+
             VList newVList = new(
                 vListCreate.Title.Trim(),
                 vListCreate.Description.Trim(),
