@@ -1,5 +1,4 @@
 import { FC, ChangeEvent, useState, useEffect, useCallback, ReactElement } from "react";
-import { BACKEND_HEALTH_URL } from '../../api/config';
 import { AcceptedCreateListFormData, sendApiRequest } from '../../api/api';
 
 interface CreateListModalProps {

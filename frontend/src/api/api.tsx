@@ -1,4 +1,3 @@
-import { CreateListFormData } from '../features/createList/CreateList';
 import { BACKEND_API_URL } from './config';
 
 export type AcceptedCreateListFormData = {
