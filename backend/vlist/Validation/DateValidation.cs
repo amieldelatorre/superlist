@@ -5,9 +5,9 @@ namespace vlist.Validation
     public class DateValidation
     {
         public static readonly string[] DateFormats =  {
-            "yyyy-MM-ddTHH:mm:sszzz",
-            "yyyy-MM-ddTHH:mm:sszz",
-            "yyyy-MM-ddTHH:mm:ssZ" 
+            "yyyy-MM-dd\\THH:mm:sszzz",
+            "yyyy-MM-dd\\THH:mm:sszz",
+            "yyyy-MM-dd\\THH:mm:ss\\Z" 
         };
         public static bool IsValidDate(string date)
         {
