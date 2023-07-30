@@ -65,7 +65,7 @@ namespace vlist.Helpers
             {
                 var client = new MongoClient(connectionString);
                 client.GetDatabase(DB_DATABASE_NAME).RunCommand<BsonDocument>(new BsonDocument("ping", 1));
-                Console.WriteLine("Pinged MongoDb. Successfully connected!");
+                Console.WriteLine("info: Pinged MongoDb. Successfully connected!");
             }
             catch (Exception ex)
             {

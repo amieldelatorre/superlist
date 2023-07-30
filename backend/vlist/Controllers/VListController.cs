@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Globalization;
 using System.Net;
 using vlist.Data;
@@ -12,9 +13,13 @@ namespace vlist.Controllers
     [ApiController]
     public class VListController : ControllerBase
     {
+        private readonly ILogger _logger;
         private readonly IRepo _vListRepo;
-        public VListController(IRepo vListRepo) =>
+        public VListController(ILogger<VListController> logger, IRepo vListRepo)
+        {
+            _logger = logger;
             _vListRepo = vListRepo;
+        }
 
         [HttpGet("{id:length(24)}")]
         public async Task Get(string id) =>
@@ -23,28 +28,39 @@ namespace vlist.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(VListCreate vListCreate)
         {
-            Dictionary<string, List<string>> validationErrors = vListCreate.ValidateListCreate();
-            if (validationErrors.Count != 0)
-                return BadRequest(new {
-                    errors = validationErrors,
-                    staus = HttpStatusCode.BadRequest,
-                    title = "One or more validation errors occured."
-                });
+            try
+            {
+                _logger.LogInformation("Creating list.");
+                Dictionary<string, List<string>> validationErrors = vListCreate.ValidateListCreate();
+                if (validationErrors.Count != 0)
+                    return BadRequest(new
+                    {
+                        errors = validationErrors,
+                        staus = HttpStatusCode.BadRequest,
+                        title = "One or more validation errors occured."
+                    });
 
 
-            VList newVList = new(
-                vListCreate.Title.Trim(),
-                vListCreate.Description.Trim(),
-                vListCreate.CreatedBy.Trim(),
-                DateValidation.ParseDate(vListCreate.Expiry).ToUniversalTime(),
-                vListCreate.PassPhrase
-                );
+                VList newVList = new(
+                    vListCreate.Title.Trim(),
+                    vListCreate.Description.Trim(),
+                    vListCreate.CreatedBy.Trim(),
+                    DateValidation.ParseDate(vListCreate.Expiry).ToUniversalTime(),
+                    vListCreate.PassPhrase
+                    );
 
-            await _vListRepo.CreateAsync(newVList);
+                await _vListRepo.CreateAsync(newVList);
+                _logger.LogDebug("Successfully created list.");
 
-            VListPresent vListPresent = new(newVList);
+                VListPresent vListPresent = new(newVList);
+                return CreatedAtAction(nameof(Get), new { id = vListPresent.Id }, vListPresent);
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Failed creating list.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
             
-            return CreatedAtAction(nameof(Get), new { id = vListPresent.Id }, vListPresent);
         }
 
         [HttpPut("{id:length(24)}")]
