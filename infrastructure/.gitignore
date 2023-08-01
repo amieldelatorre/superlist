@@ -1,5 +1,0 @@
-.env
-*.conf
-
-.terraform/
-.terraform.lock.hcl
