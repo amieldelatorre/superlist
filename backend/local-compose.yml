@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres
     container_name: postgres
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./.local-docker/pg-data:/var/lib/postgresql/data
     ports:
@@ -17,7 +17,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./.local-docker/pgadmin-data:/var/lib/pgadmin
     ports:
@@ -25,3 +25,10 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
       PGADMIN_DEFAULT_PASSWORD: strong-password
+
+  server:
+    build: .
+    container_name: server
+    restart: unless-stopped
+    ports:
+      - 5000:5000
